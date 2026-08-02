@@ -5,7 +5,7 @@ name: CI
 
 on:
   push:
-    branches: [advanced]
+    branches: [main]
 
 jobs:
   # Github runner
@@ -34,4 +34,3 @@ jobs:
         run: npm run test 
         working-directory: frontend
 
-        
