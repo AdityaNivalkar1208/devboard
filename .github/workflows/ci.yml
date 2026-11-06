@@ -82,9 +82,9 @@ jobs:
           tags: ${{ vars.DOCKERHUB_USERNAME }}/devboard-backend:latest
 
   deploy:
-    needs: [frontend, backend]
-    uses: ./.github/workflows/cd.yml
-    secrets: inherit
+        needs: [frontend,backend]
+        uses: ./.github/workflows/cd.yml
+        secrets: inherit
 
   
   
