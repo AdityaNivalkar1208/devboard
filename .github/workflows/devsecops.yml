@@ -9,3 +9,6 @@ on:
 jobs:
     code-quality:
         uses: ./.github/workflows/code-quality.yml
+    
+    scan-secrets:
+        uses: ./.github/workflows/secret-scanning.yml
