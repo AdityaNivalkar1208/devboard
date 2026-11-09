@@ -3,11 +3,12 @@
 name: CI
 
 on: 
-    push:
-        paths:
-          - '**'
-          - '!.github/workflow/**'
-        branches: [main]
+  workflow_dispatch:
+    # push:
+    #     paths:
+    #       - '**'
+    #       - '!.github/workflow/**'
+    #     branches: [main]
 
 jobs:
     frontend:
