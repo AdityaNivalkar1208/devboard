@@ -24,7 +24,7 @@ FROM node:20-alpine AS production
 
 WORKDIR /app
 
-# Install only production dependencies or use a lightweight static server
+# Install only production dependencies
 COPY package*.json ./
 RUN npm ci --omit=dev --legacy-peer-deps
 
