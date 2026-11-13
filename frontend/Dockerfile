@@ -1,17 +1,15 @@
-FROM dhi.io/node:26-dev AS build
+# --- Build Stage ---
+FROM node:20-alpine AS build
 
 WORKDIR /app
 
 COPY package*.json ./
-
-RUN npm install --legacy-peer-deps
+RUN npm ci --legacy-peer-deps
 
 RUN npm list vite > /dev/null 2>&1 || npm install --no-save vite@5.4.11
 
 COPY . .
 
-# Browser tracing is baked in at build time (Vite replaces import.meta.env).
-# Off by default so a plain `docker build` or compose run stays untraced.
 ARG VITE_OTEL_ENABLED=false
 ARG VITE_OTEL_ENVIRONMENT=dev
 ARG VITE_APP_VERSION=dev
@@ -21,17 +19,18 @@ ENV VITE_OTEL_ENABLED=$VITE_OTEL_ENABLED \
 
 RUN npm run build
 
-FROM dhi.io/node:26
+# --- Production Runtime Stage ---
+FROM node:20-alpine AS production
 
 WORKDIR /app
 
+# Install only production dependencies or use a lightweight static server
+COPY package*.json ./
+RUN npm ci --omit=dev --legacy-peer-deps
+
+# Copy built assets from build stage
 COPY --from=build /app/dist ./dist
-
-COPY --from=build /app/node_modules ./node_modules
-
-COPY vite.preview.config.js ./vite.config.js
 
 EXPOSE 4173
 
-ENTRYPOINT ["node", "--no-warnings"]
-CMD ["./node_modules/.bin/vite", "preview", "--host", "0.0.0.0", "--port", "4173"]
+CMD ["node", "./node_modules/.bin/vite", "preview", "--host", "0.0.0.0", "--port", "4173"]
