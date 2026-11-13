@@ -10,7 +10,6 @@ RUN npm list vite > /dev/null 2>&1 || npm install --no-save vite@5.4.11
 
 COPY . .
 
-# Browser tracing is baked in at build time (Vite replaces import.meta.env).
 # Off by default so a plain `docker build` or compose run stays untraced.
 ARG VITE_OTEL_ENABLED=false
 ARG VITE_OTEL_ENVIRONMENT=dev
