@@ -1,22 +1,14 @@
-# --- Build Stage ---
 FROM node:20-alpine AS build
 
 WORKDIR /app
 
+# Update global npm to patch embedded dependencies like tar
+RUN npm install -g npm@latest
+
 COPY package*.json ./
 RUN npm install --legacy-peer-deps
 
-# RUN npm list vite > /dev/null 2>&1 || npm install --no-save vite@5.4.11
-
 COPY . .
-
-ARG VITE_OTEL_ENABLED=false
-ARG VITE_OTEL_ENVIRONMENT=dev
-ARG VITE_APP_VERSION=dev
-ENV VITE_OTEL_ENABLED=$VITE_OTEL_ENABLED \
-    VITE_OTEL_ENVIRONMENT=$VITE_OTEL_ENVIRONMENT \
-    VITE_APP_VERSION=$VITE_APP_VERSION
-
 RUN npm run build
 
 # --- Production Runtime Stage ---
