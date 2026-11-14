@@ -2,6 +2,10 @@
 node_modules/
 dist/
 .vite/
+.git
+.gitignore
+npm-debug.log
+Dockerfile
 
 # go
 /backend/devboard-backend
@@ -15,3 +19,5 @@ dist/
 
 # claude's personal scratch notes (local only)
 CLAUDE.md
+
+node_modules
