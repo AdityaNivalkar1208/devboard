@@ -37,6 +37,7 @@ jobs:
         uses: ./.github/workflows/cd.yml
         secrets: inherit
     
+    # Security checks after deploy
     dast-scan:
         needs: [deploy]
         uses: ./.github/workflows/dast.yml
