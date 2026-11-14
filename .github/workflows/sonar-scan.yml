@@ -14,8 +14,6 @@ jobs:
 
             - name: SonarQube Scan
               uses: SonarSource/sonarqube-scan-action@v8.2.0
-              with:
-                scannerVersion: 6.1.0.4477
               env:
                 SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
                 SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
