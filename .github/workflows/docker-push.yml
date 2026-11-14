@@ -30,7 +30,3 @@ jobs:
                 push: true
                 tags: ${{ vars.DOCKERHUB_USERNAME }}/devboard-${{ matrix.folders}}:latest
               
-    # deploy:
-    #     needs: [frontend]
-    #     uses: ./.github/workflows/cd.yml
-    #     secrets: inherit
